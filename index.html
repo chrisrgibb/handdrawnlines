@@ -7,10 +7,15 @@
 	<h1>Draw some shapes</h1>
 	<div>
 		<div id="buttons">
-			<button id="line">&#124;</button>
-			<button id="square">&#9633;</button>
-			<button id="circle">&#9675;</button>
+			<button id="line" title="line" >&#124;</button>
+			<button id="square" title = "square" >&#9633;</button>
+			<button id="circle" title = "circle">&#9675;</button>
 		</div>
+        <label for="noise-amplitude">Waviness</label>
+        <input id="noise-amplitude" min="1" max="10" type="range" value="0"/>
+        <label for="noise-scale">graininess</label>
+        <input id="noise-scale" min="0.01" max="1" step="0.01" type="range" value="0"/>
+       
 		<canvas id='canvas' width ='640' height='480'></canvas>
 	</div>
 
@@ -18,5 +23,6 @@
 <script type="text/javascript" src="simplenoise.js"></script>
 <script type="text/javascript" src="renderer.js"></script>
 <script type="text/javascript" src="index.js"></script>
+<script type="text/javascript" src="bezier.js"></script>
 </body>
 </html>

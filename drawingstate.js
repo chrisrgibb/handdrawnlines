@@ -67,5 +67,6 @@ var drawingState = {
             };
         }
 	},
-	selected : "line"
+	selected : "line",
+    shapes : []
 };

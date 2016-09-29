@@ -1,14 +1,14 @@
 
 var noise = new Simple1DNoise();
-noise.setAmplitude(1);
-noise.setScale(1);
+noise.setAmplitude(2);
+noise.setScale(0.05);
 
 
 
 var canvas = document.getElementById('canvas');
 var scale = 1;
 var renderer = new Renderer(canvas, scale);
-renderer.render();
+renderer.render([]);
 
 
 canvas.addEventListener('mousedown', function(e){
@@ -26,11 +26,11 @@ canvas.addEventListener('mouseup', function(e){
 
 	drawingState.end(x, y);
 
-	renderer.addShape(drawingState.getCurrentShape());
+	drawingState.shapes.push(drawingState.getCurrentShape());
 
 	drawingState.reset();
 	renderer.currentShape = null;
-	renderer.render();
+	renderer.render(drawingState.shapes);
 });
 
 canvas.addEventListener('mousemove', function(e){
@@ -45,7 +45,21 @@ canvas.addEventListener('mousemove', function(e){
     // draw the shape the user is trying to draw.
     renderer.currentShape = drawingState.getCurrentShape();
 
-    renderer.render();
+    renderer.render(drawingState.shapes);
+});
+
+document.getElementById('noise-amplitude').addEventListener('change', function(e){
+	// debugger;
+	var val = parseInt(this.value);
+	noise.setAmplitude(val);
+    renderer.render(drawingState.shapes);
+});
+
+document.getElementById('noise-scale').addEventListener('change', function(e){
+	// debugger;
+	var val = parseFloat(this.value);
+	noise.setScale(val);
+    renderer.render(drawingState.shapes);
 });
 
 

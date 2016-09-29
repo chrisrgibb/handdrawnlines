@@ -9,9 +9,15 @@ var Renderer = function (canvas, scale) {
     this.shapes = [];
     this.currentShape = null;
 
-	this.render = function(){
+
+	/**
+     * render an array of shapes. 
+	 * @param  {any} shapes
+	 */
+	this.render = function(shapes){
 		var ctx = this.ctx;
-        ctx.imageSmoothingEnabled = false
+        // ctx.imageSmoothingEnabled = false
+     
         // clear screen
 		ctx.fillStyle = this.backgroundColor;
 		ctx.fillRect(0, 0, 640, 480);
@@ -19,7 +25,7 @@ var Renderer = function (canvas, scale) {
         // use black pen
 		ctx.fillStyle = 'black';
 
-        this.shapes.forEach(this.drawShape, this);
+        shapes.forEach(this.drawShape, this);
         if (this.currentShape){ 
             this.drawShape(this.currentShape);
         }
@@ -37,17 +43,13 @@ var Renderer = function (canvas, scale) {
         }
     }
 
-    this.addShape = function(shape){
-        this.shapes.push(shape);
-    };
-
     this.drawLine = function line(x0, y0, x1, y1){
         var dx = Math.abs(x1-x0);
         var dy = Math.abs(y1-y0);
         var sx = (x0 < x1) ? 1 : -1;
         var sy = (y0 < y1) ? 1 : -1;
         var err = dx-dy;
-
+ 
         while(true){
             setPixel(x0,y0); 
 
@@ -95,9 +97,9 @@ var Renderer = function (canvas, scale) {
     var ctx = this.ctx;
 
     var setPixel = function(x, y){
-        var xOffset = noise.getVal(y) // * 2 - 1;
-        var yoffset = noise.getVal(x) //* 2 - 1;
+        var xOffset = noise.getVal(y + x) * 2 - 1;
+        var yOffset = noise.getVal(x + y) * 2 - 1;
 
-        return plot(x + xOffset, y + yoffset, ctx);
+        plot(x + xOffset, y + yOffset, ctx);
     }
 }
